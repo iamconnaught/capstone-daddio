@@ -34,4 +34,41 @@ router.post('/register', async (req,res,next) => {
 	}
 })
 
+router.post('/login', async (req, res, next) => {
+	try {
+		const foundUser = await User.findOne({'username': req.body.username});
+		if(foundUser){
+			if(bcrypt.compareSync(req.body.password, foundUser.password)){
+				req.session.message = '';
+				req.session.loggedIn = true;
+				req.session.userDbId = foundUser._id;
+
+				console.log('current session');
+				console.log(req.session);
+
+				res.json({
+					status: 200,
+					data: foundUser
+				});
+			} else {
+				req.session.message = "Username or Password Invalid";
+			}
+		} else {
+				req.session.message = "Username or Password Invalid";
+			}
+
+	} catch (err){
+		res.send(err);
+	}
+});
+
+
+
+
+
+
+
+
+
+
 module.exports = router;
