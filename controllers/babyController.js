@@ -42,13 +42,12 @@ router.get('/', (req, res, next) => {
 });
 
 router.put('/:id', (req,res) => {
-	Baby.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedBaby) => {
-		User.findOne({'baby': req.params.id}, (err, foundUser) => {
-			if(foundUser._id.toString() !== req.body.userId){
-
-			}
+	if (req.session.loggedIn) {
+		Baby.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedBaby) => {
+		res.status(200).json(updatedBaby);
 		})
-	})
+	}
+	
 })
 
 
