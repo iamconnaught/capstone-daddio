@@ -35,6 +35,9 @@ app.use('/auth', authController);
 const userController = require('./controllers/userController');
 app.use('/user', userController);
 
+const babyController = require('./controllers/babyController');
+app.use('/baby', babyController);
+
 app.listen(process.env.PORT, () => {
 	console.log('listening on port', process.env.PORT);
 })
