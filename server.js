@@ -32,6 +32,9 @@ app.use(cors(corsOptions));
 const authController = require('./controllers/authController');
 app.use('/auth', authController);
 
+const userController = require('./controllers/userController');
+app.use('/user', userController);
+
 app.listen(process.env.PORT, () => {
 	console.log('listening on port', process.env.PORT);
 })
