@@ -10,4 +10,4 @@ const BabySchema = new mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model('Baby' BabySchema);
+module.exports = mongoose.model('Baby', BabySchema);

@@ -8,4 +8,4 @@ const NameSchema = new mongoose.Schema({
 	}
 });
 
-module.exports = mongoose.model('Name' NameSchema);
+module.exports = mongoose.model('Name', NameSchema);
