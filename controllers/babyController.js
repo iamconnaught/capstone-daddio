@@ -11,12 +11,15 @@ router.post('/new', async (req, res, next) => {
 			dateOfBirth: req.body.date,
 			name: req.body.name,
 			gender: req.body.gender,
-			ownerId: currentUser
+			ownerId: currentUser._id
 		})
 
 		await thisBaby.save();
 		currentUser.baby.push(thisBaby);
 		await currentUser.save();
+		res.status(200).json({
+			data: thisBaby
+		})
 	} catch (err){
 		next(err)
 	}
@@ -38,6 +41,15 @@ router.get('/', (req, res, next) => {
 	}
 });
 
+router.put('/:id', (req,res) => {
+	Baby.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedBaby) => {
+		User.findOne({'baby': req.params.id}, (err, foundUser) => {
+			if(foundUser._id.toString() !== req.body.userId){
+
+			}
+		})
+	})
+})
 
 
 
