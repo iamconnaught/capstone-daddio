@@ -51,5 +51,12 @@ router.get('/:id', async (req, res, next) => {
 	}
 });
 
+router.put('/:id', (req,res) => {
+	if (req.session.loggedIn) {
+		Task.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedTask) => {
+			res.status(200).json(updatedTask);
+		})
+	}
+})
 
 module.exports = router;
