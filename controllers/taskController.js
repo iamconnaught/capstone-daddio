@@ -36,6 +36,20 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+router.get('/:id', async (req, res, next) => {
+	try {
+		if (!req.session.loggedIn) {
+			res.json({
+				data: "not logged in"
+			})
+		} else {
+			const foundTask = await Task.findById(req.params.id);
+			res.status(200).json(foundTask);
+		}
+	} catch (err){
+		next(err);
+	}
+});
 
 
 module.exports = router;
