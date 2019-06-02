@@ -57,6 +57,23 @@ router.put('/:id', (req,res) => {
 			res.status(200).json(updatedTask);
 		})
 	}
+});
+
+router.delete('/:id', async (req, res, next) => {
+	if (req.session.loggedIn) {
+		try {
+			const deletedTask = await Task.findByIdAndRemove(req.params.id);
+			res.status(200).json('deleted: ' + deletedTask);
+		} catch (err){
+			next(err)
+		}
+	}
 })
+
+
+
+
+
+
 
 module.exports = router;
