@@ -7,7 +7,7 @@ router.post('/new', async (req, res, next) => {
 	try {
 
 		const currentUser = await User.findById(req.session.userDbId);
-		thisBaby = new Baby({
+		const thisBaby = new Baby({
 			dateOfBirth: req.body.date,
 			name: req.body.name,
 			gender: req.body.gender,

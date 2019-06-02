@@ -38,6 +38,9 @@ app.use('/user', userController);
 const babyController = require('./controllers/babyController');
 app.use('/baby', babyController);
 
+const taskController = require('./controllers/taskController');
+app.use('/task', taskController);
+
 app.listen(process.env.PORT, () => {
 	console.log('listening on port', process.env.PORT);
 })
