@@ -22,6 +22,19 @@ router.post('/new', async (req, res, next) => {
 	}
 });
 
+router.get('/', async (req, res, next) => {
+	if(req.session.loggedIn){
+		Post.find({}, (err, foundPosts) => {
+			if (err) {
+				next(err)
+			} else res.status(200).json(foundPosts)
+		})
+	} else {
+		res.json({
+			data: "not signed in"
+		});
+	}
+});
 
 
 module.exports = router;
