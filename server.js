@@ -44,6 +44,10 @@ app.use('/task', taskController);
 const postController = require('./controllers/postController');
 app.use('/post', postController);
 
+const nameController = require('./controllers/nameController');
+app.use('/name', nameController);
+
+
 app.listen(process.env.PORT, () => {
 	console.log('listening on port', process.env.PORT);
 })
