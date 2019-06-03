@@ -6,6 +6,9 @@ const superagent = require('superagent');
 
 router.post('/new', async (req, res, next) => {
 	try {
+		console.log("hitting post route for name");
+		console.log("req.body:")
+		console.log(req.body);
 		const currentUser = await User.findById(req.session.userDbId);
 		const thisName = new Name({
 			name: req.body.name
@@ -33,8 +36,8 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-router.get('/search/random', (req, res, next) => {
-	const apiCall = `https://www.behindthename.com/api/random.json?usage=${req.query.usage}&gender=${req.query.gender}&key=${process.env.BEHIND_NAME_API}`
+router.get('/random', (req, res, next) => {
+	const apiCall = `https://www.behindthename.com/api/random.json?number=6&key=${process.env.BEHIND_NAME_API}`
 	console.log("here is the API Call for random name");
 	console.log(apiCall);
 	superagent
