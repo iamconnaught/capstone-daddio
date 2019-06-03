@@ -61,11 +61,22 @@ router.get('/search/behind', (req, res, next) => {
 		.set('Accept', 'application/json')
 		.then((data) => {
 			const actualData = JSON.parse(data.text)
-			// const justTheDataIWant = actualData.names.map(names => {
-			// 	return{
-			// 		name: names.name
-			// 	}
-			// })
+			
+			res.status(200).json(actualData)
+		})
+
+})
+
+router.get('/search/related', (req, res, next) => {
+	const apiCall = `https://www.behindthename.com/api/related.json?name=${req.query.name}&key=${process.env.BEHIND_NAME_API}`
+	console.log("here is the API Call for related names");
+	console.log(apiCall);
+	superagent
+		.get(apiCall)
+		.set('Accept', 'application/json')
+		.then((data) => {
+			const actualData = JSON.parse(data.text)
+		
 			res.status(200).json(actualData)
 		})
 
