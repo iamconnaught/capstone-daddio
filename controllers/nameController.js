@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
 const Name = require('../models/name');
+const superagent = require('superagent');
 
 router.post('/new', async (req, res, next) => {
 	try {
@@ -31,6 +32,25 @@ router.get('/', async (req, res, next) => {
 		});
 	}
 });
+
+router.get('/search/random', (req, res, next) => {
+	const apiCall = `https://www.behindthename.com/api/random.json?usage=${req.query.usage}&gender=${req.query.gender}&key=${process.env.BEHIND_NAME_API}`
+	console.log("here is the API Call for random name");
+	console.log(apiCall);
+	superagent
+		.get(apiCall)
+		.set('Accept', 'application/json')
+		.then((data) => {
+			const actualData = JSON.parse(data.text)
+			// const justTheDataIWant = actualData.names.map(names => {
+			// 	return{
+			// 		name: names.name
+			// 	}
+			// })
+			res.status(200).json(actualData)
+		})
+
+})
 
 router.get('/:id', async (req, res, next) => {
 	try {
