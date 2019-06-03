@@ -1,6 +1,6 @@
-#Daddio 
+#Daddio# 
 
-##User Stories
+##User Stories##
 -Users can sign up with name and password.
 -Users create a child with a mandatory due date, and name and gender. 
  -For gender the user has an option of boy, girl, unknown.  
@@ -16,7 +16,7 @@
  -Users can search for keywords and pull up created posts that match the keyword
 -When users add an item to their to do list, the site displays relevant articles from the blog
 
-##Nice to haves 
+##Nice to haves## 
 -Education/Advice
  -What’s going on with mother or baby at certain stages of the pregnancy
  -How to’s:
@@ -24,11 +24,11 @@
   -Swaddle
   -Make a Go Bag
 
-##Stretch Goals
+##Stretch Goals##
 -Notifications
  -People can sign up for notifications from the user, so that when the baby is coming, the user can send a message to the group.
 
-##Models
+##Models##
 **User**
 -Username: String
 -Password: String
@@ -62,7 +62,7 @@
 
 
 
-##EndPoints
+##EndPoints##
 **Post**
 -/auth/register - register new users
 -/auth/login log in users
