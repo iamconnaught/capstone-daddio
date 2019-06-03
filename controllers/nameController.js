@@ -55,4 +55,15 @@ router.put('/:id', (req,res) => {
 	}
 });
 
+router.delete('/:id', async (req, res, next) => {
+	if (req.session.loggedIn) {
+		try {
+			const deletedName = await Name.findByIdAndRemove(req.params.id);
+			res.status(200).json('deleted: ' + deletedName);
+		} catch (err){
+			next(err)
+		}
+	}
+});
+
 module.exports = router;
