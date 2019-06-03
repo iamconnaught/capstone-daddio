@@ -32,4 +32,27 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+router.get('/:id', async (req, res, next) => {
+	try {
+		if (!req.session.loggedIn) {
+			res.json({
+				data: "not logged in"
+			})
+		} else {
+			const foundName = await Name.findById(req.params.id);
+			res.status(200).json(foundName);
+		}
+	} catch (err){
+		next(err);
+	}
+});
+
+router.put('/:id', (req,res) => {
+	if (req.session.loggedIn) {
+		Name.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedName) => {
+			res.status(200).json(updatedName);
+		})
+	}
+});
+
 module.exports = router;
