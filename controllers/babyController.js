@@ -41,13 +41,34 @@ router.get('/', (req, res, next) => {
 	}
 });
 
-router.put('/:id', (req,res) => {
+router.get('/:id', async (req, res, next) => {
 	if (req.session.loggedIn) {
-		Baby.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedBaby) => {
-		res.status(200).json(updatedBaby);
+		const foundUser = await Baby.findById(req.params.id).populate('ownerId')
+		const baby = await Baby.findById(req.params.id)
+		res.status(200).json(baby)
+	} else {
+		res.json({
+			data: "not signed in"
 		})
 	}
-	
+})
+
+router.put('/:id', (req,res) => {
+
+	console.log("hitting the update baby route")
+
+	console.log("baby to update ID:")
+	console.log(req.params.id)
+
+	if (req.session.loggedIn) {
+		Baby.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedBaby) => {
+			
+			console.log("Here is updated baby:")
+			console.log(updatedBaby)
+
+			res.status(200).json(updatedBaby);
+		})
+	}
 })
 
 router.delete('/:id', async (req, res, next) => {
