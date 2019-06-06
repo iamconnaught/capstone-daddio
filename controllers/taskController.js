@@ -52,10 +52,19 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.put('/:id', (req,res) => {
+
+	console.log("you are hitting the put route for task")
+	console.log("req.body");
+	console.log(req.body);
+
 	if (req.session.loggedIn) {
 		Task.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedTask) => {
 			res.status(200).json(updatedTask);
 		})
+	} else {
+		res.json({
+			data: "not signed in"
+		});
 	}
 });
 
