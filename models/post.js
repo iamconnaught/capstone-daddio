@@ -4,7 +4,7 @@ const PostSchema = new mongoose.Schema({
 	title: String,
 	text: String,
 	date: Date,
-	keywords: Array,
+	keywords: String,
 	ownerId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'

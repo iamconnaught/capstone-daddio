@@ -25,19 +25,24 @@ router.post('/new', async (req, res, next) => {
 	}
 })
 
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
 	if (req.session.loggedIn) {
-		Baby.find({}, (err, foundBabies) => {
-			if(err){
-				res.send(err);
-			} else {
-				res.status(200).json(foundBabies)
-			}
-		})
-	} else {
+		const foundBabies = await Baby.find({ownerId: req.session.userDbId});
 		res.json({
-			data: "not signed in"
+			status: 200,
+			data: foundBabies
 		})
+	// 	Baby.find({}, (err, foundBabies) => {
+	// 		if(err){
+	// 			res.send(err);
+	// 		} else {
+	// 			res.status(200).json(foundBabies)
+	// 		}
+	// 	})
+	// } else {
+	// 	res.json({
+	// 		data: "not signed in"
+	// 	})
 	}
 });
 
@@ -45,6 +50,7 @@ router.get('/:id', async (req, res, next) => {
 	if (req.session.loggedIn) {
 		const foundUser = await Baby.findById(req.params.id).populate('ownerId')
 		const baby = await Baby.findById(req.params.id)
+		console.log(baby.dateOfBirth);
 		res.status(200).json(baby)
 	} else {
 		res.json({
@@ -57,8 +63,8 @@ router.put('/:id', (req,res) => {
 
 	console.log("hitting the update baby route")
 
-	console.log("baby to update ID:")
-	console.log(req.params.id)
+	console.log("here are params")
+	console.log(req.body)
 
 	if (req.session.loggedIn) {
 		Baby.findByIdAndUpdate(req.params.id, req.body, {new: true}, (err, updatedBaby) => {
