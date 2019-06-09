@@ -4,24 +4,30 @@ const User = require('../models/user');
 const Baby = require('../models/baby')
 
 router.post('/new', async (req, res, next) => {
-	try {
+	if(req.session.loggedIn) {
+		try {
 
-		const currentUser = await User.findById(req.session.userDbId);
-		const thisBaby = new Baby({
-			dateOfBirth: req.body.date,
-			name: req.body.name,
-			gender: req.body.gender,
-			ownerId: currentUser._id
-		})
+			const currentUser = await User.findById(req.session.userDbId);
+			const thisBaby = new Baby({
+				dateOfBirth: req.body.date,
+				name: req.body.name,
+				gender: req.body.gender,
+				ownerId: currentUser._id
+			})
 
-		await thisBaby.save();
-		currentUser.baby.push(thisBaby);
-		await currentUser.save();
-		res.status(200).json({
-			data: thisBaby
+			await thisBaby.save();
+			currentUser.baby.push(thisBaby);
+			await currentUser.save();
+			res.status(200).json({
+				data: thisBaby
+			})
+		} catch (err){
+			next(err)
+		}
+	} else {
+		res.json({
+			data: "not signed in"
 		})
-	} catch (err){
-		next(err)
 	}
 })
 
@@ -39,10 +45,10 @@ router.get('/', async (req, res, next) => {
 	// 			res.status(200).json(foundBabies)
 	// 		}
 	// 	})
-	// } else {
-	// 	res.json({
-	// 		data: "not signed in"
-	// 	})
+	} else {
+		res.json({
+			data: "not signed in"
+		})
 	}
 });
 
@@ -74,6 +80,10 @@ router.put('/:id', (req,res) => {
 
 			res.status(200).json(updatedBaby);
 		})
+	} else {
+		res.json({
+			data: "not signed in"
+		})
 	}
 })
 
@@ -85,6 +95,10 @@ router.delete('/:id', async (req, res, next) => {
 		} catch (err){
 			next(err)
 		}
+	} else {
+		res.json({
+			data: "not signed in"
+		})
 	}
 })
 

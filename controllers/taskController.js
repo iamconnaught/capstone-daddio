@@ -4,21 +4,27 @@ const User = require('../models/user');
 const Task = require('../models/Task');
 
 router.post('/new', async (req, res, next) => {
-	try {
-		const currentUser = await User.findById(req.session.userDbId);
-		const thisTask = new Task({
-			title: req.body.title,
-			details: req.body.details,
-			isCompleted: req.body.isCompleted,
-			ownerId: currentUser._id
-		})
+	if(req.session.loggedIn){
+		try {
+			const currentUser = await User.findById(req.session.userDbId);
+			const thisTask = new Task({
+				title: req.body.title,
+				details: req.body.details,
+				isCompleted: req.body.isCompleted,
+				ownerId: currentUser._id
+			})
 
-		await thisTask.save();
-		currentUser.task.push(thisTask);
-		await currentUser.save();
-		res.status(200).json(thisTask);
-	} catch (err){
-		next(err)
+			await thisTask.save();
+			currentUser.task.push(thisTask);
+			await currentUser.save();
+			res.status(200).json(thisTask);
+		} catch (err){
+			next(err)
+		}
+	} else {
+		res.json({
+			data: "not signed in"
+		});
 	}
 });
 
@@ -76,6 +82,10 @@ router.delete('/:id', async (req, res, next) => {
 		} catch (err){
 			next(err)
 		}
+	} else {
+		res.json({
+			data: "not signed in"
+		});
 	}
 })
 
