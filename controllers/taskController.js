@@ -30,11 +30,9 @@ router.post('/new', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
 	if(req.session.loggedIn){
-		Task.find({}, (err, foundTasks) => {
-			if (err) {
-				next(err)
-			} else res.status(200).json(foundTasks)
-		})
+		const foundTask = await Task.find({ownerId: req.session.userDbId});
+		res.status(200).json(foundTask)
+		
 	} else {
 		res.json({
 			data: "not signed in"
@@ -49,6 +47,7 @@ router.get('/:id', async (req, res, next) => {
 				data: "not logged in"
 			})
 		} else {
+			const foundUser = await Task.findById(req.params.id).populate('ownerId')
 			const foundTask = await Task.findById(req.params.id);
 			res.status(200).json(foundTask);
 		}

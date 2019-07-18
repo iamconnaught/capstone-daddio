@@ -44,7 +44,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/random', (req, res, next) => {
-	const apiCall = `https://www.behindthename.com/api/random.json?number=6&key=${process.env.BEHIND_NAME_API}`
+	const apiCall = `https://www.behindthename.com/api/random.json?usage=eng&number=6&key=${process.env.BEHIND_NAME_API}`
 	console.log("here is the API Call for random name");
 	console.log(apiCall);
 	superagent
