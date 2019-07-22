@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/user');
 const Baby = require('../models/baby')
 
+// new baby
 router.post('/new', async (req, res, next) => {
 	if(req.session.loggedIn) {
 		try {
