@@ -22,12 +22,13 @@ app.use(session({
 }));
 
 
-const corsOptions = {
-	origin: process.env.FRONTEND_URL,
-	credentials: true,
-	optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+// 	origin: process.env.FRONTEND_URL,
+// 	credentials: true,
+// 	optionsSuccessStatus: 200
+// };
+// app.use(cors(corsOptions));
+app.use(cors(*));
 
 const authController = require('./controllers/authController');
 app.use('/auth', authController);
