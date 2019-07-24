@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const Task = require('../models/Task');
+const Task = require('../models/task');
 
 router.post('/new', async (req, res, next) => {
 	if(req.session.loggedIn){
